@@ -8,13 +8,14 @@ Created on Sun Apr 12 15:24:29 2015
 import cv2
 import prep2
 
+"""
 img1 = cv2.imread('/home/suryo/Image_Processing_Exercises/IISC/resources/1.jpg',0)
 prep_img1 = prep2.preprocess(img1)
 cv2.imshow('Output1',prep_img1)
 cv2.imwrite('skewres1.jpg',prep_img1)
-
+"""
 img2 = cv2.imread('/home/suryo/Image_Processing_Exercises/IISC/resources/Kandanu10.jpg',0)
-prep_img1 = prep2.preprocess(img2)
+prep_img2 = prep2.preprocess(img2)
 cv2.imshow('Outpu2t',prep_img2)
 cv2.imwrite('skewres2.jpg',prep_img2)
 
