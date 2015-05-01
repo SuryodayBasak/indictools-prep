@@ -168,7 +168,7 @@ def skew_correction(img):
     non_zero_angles = []
     
     for i in all_angles:
-        if ((i != 0) and (i!=90)):
+        if ((i != 0) and (i!=90.0)):
             non_zero_angles.append(i)
             
     print non_zero_angles
