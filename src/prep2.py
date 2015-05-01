@@ -183,8 +183,21 @@ def skew_correction(img):
     #angle = np.mean(non_zero_angles)
     #angle = np.mode(rounded_angles)
     
-    angle = mode(rounded_angles)[0][0]
+    mode_angle = mode(rounded_angles)[0][0]
+    print mode_angle
+    
+    precision_angles = []
+    for i in non_zero_angles:
+        if (np.round(i,0) == mode_angle):
+            precision_angles.append(i)
+            
+    print 'precision angles:'
+    print precision_angles
+    
+    angle = np.mean(precision_angles)
+    print 'Finally, the required angle is:'
     print angle
+        
     #M = cv2.getRotationMatrix2D((width/2,height/2),-(90+angle),1)
     M = cv2.getRotationMatrix2D((width/2,height/2),-(90+angle),1)
     dst = cv2.warpAffine(img,M,(width,height))
