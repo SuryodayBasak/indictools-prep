@@ -11,6 +11,8 @@ This python module can perform the following functions:
 
 1. Binarization - method binary_img(img) performs this function
 2. Skew correction - method skew_correction(img) performs this function
+Need to introduce machine learning of some sort to make the skew correction
+method run faster :(
 """
 
 import cv2
