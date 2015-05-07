@@ -83,6 +83,10 @@ of computations, as the size of data will reduce.
 
 def resize(img):
     
+    r = 300.0 / img.shape[1]
+    dim = (300, int(img.shape[0] * r))
+    resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
+    
 """
 Method to correct the skew of an image
 
