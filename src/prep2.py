@@ -13,6 +13,9 @@ This python module can perform the following functions:
 2. Skew correction - method skew_correction(img) performs this function
 Need to introduce machine learning of some sort to make the skew correction
 method run faster :(
+
+Or... A simple fix would be to resize the image first, and then apply the skew
+correction method! That'll probably take lesser time...
 """
 
 import cv2
