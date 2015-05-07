@@ -83,12 +83,12 @@ of computations, as the size of data will reduce.
 
 def resize(img):
     
-    r = 300.0 / img.shape[1]
-    dim = (300, int(img.shape[0] * r))
+    r = 500.0 / img.shape[1]
+    dim = (500, int(img.shape[0] * r))
     resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
     
-    cv2.imshow('resized', resized)    
-    #return
+    #cv2.imshow('resized', resized)    
+    return resized
     
 """
 Method to correct the skew of an image
@@ -107,6 +107,7 @@ def skew_correction(img):
     k = 0
     
     binary = binary_img(img)
+    binary = resize(binary)
     contours, hierarchy = cv2.findContours(binary,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     cnt = contours[0]
     upper_bound=len(contours)
@@ -138,6 +139,7 @@ def skew_correction(img):
     
     contours, hierarchy = cv2.findContours(sobel_8u,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
    
+    print len(contours)
     contour_count=0;   
     for c in contours:
         #max_index = np.argmax(areas)
