@@ -77,6 +77,13 @@ def binary_img(img):
     return abso
     
 """
+Method to resize the image. This is going to help in reducing the number 
+of computations, as the size of data will reduce.
+"""
+
+def resize(img):
+    
+"""
 Method to correct the skew of an image
 
 Input: Binary image
