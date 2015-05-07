@@ -98,6 +98,8 @@ Output: Skew corrected binary image
 
 The nature of the output is such that the binary image is rotated appropriately
 to remove any angular skew.
+
+Find out the right place to insert the resizing method call.
 """
     
 def skew_correction(img):
