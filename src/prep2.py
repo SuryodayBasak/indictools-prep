@@ -109,7 +109,7 @@ def skew_correction(img):
     k = 0
     
     binary = binary_img(img)
-    binary = resize(binary)
+    #binary = resize(binary)
     contours, hierarchy = cv2.findContours(binary,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     cnt = contours[0]
     upper_bound=len(contours)
@@ -132,20 +132,24 @@ def skew_correction(img):
     abs_sobel64f = np.absolute(sobely)
     sobel_8u = np.uint8(abs_sobel64f)
     
-    largest_contour = np.zeros(img.shape[:2],np.uint8)
+    sobel_resize = resize(sobel_8u)
+    #largest_contour = np.zeros(img.shape[:2],np.uint8)
+    largest_contour = np.zeros(sobel_resize.shape[:2],np.uint8)
     
     """After the next step, we'll have the largest word in the image.
     Since all the words in different lines have to be parallel to each other,
     we'll take the largest word as the reference and find out it's alighment.
     We'll rotate the entire image accordingly"""
     
-    contours, hierarchy = cv2.findContours(sobel_8u,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    #contours, hierarchy = cv2.findContours(sobel_8u,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv2.findContours(sobel_resize,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
    
     print len(contours)
     contour_count=0;   
     for c in contours:
         #max_index = np.argmax(areas)
-        current_contour = np.zeros(img.shape[:2],np.uint8)
+        #current_contour = np.zeros(img.shape[:2],np.uint8)
+        current_contour = np.zeros(sobel_resize.shape[:2],np.uint8)
         cv2.drawContours(current_contour, contours, contour_count, (255,255,255), -1)
 
         height, width = largest_contour.shape[:2]
