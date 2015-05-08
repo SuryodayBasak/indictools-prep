@@ -16,6 +16,8 @@ method run faster :(
 
 Or... A simple fix would be to resize the image first, and then apply the skew
 correction method! That'll probably take lesser time...
+
+Resizing is yielding better results.
 """
 
 import cv2
