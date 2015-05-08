@@ -115,6 +115,8 @@ def skew_correction(img):
     contours, hierarchy = cv2.findContours(binary,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     cnt = contours[0]
     upper_bound=len(contours)
+    height_orig, width_orig = img.shape[:2]
+
     
     for c in contours:
         areas.append(cv2.contourArea(c))
@@ -229,7 +231,7 @@ def skew_correction(img):
         
     #M = cv2.getRotationMatrix2D((width/2,height/2),-(90+angle),1)
     M = cv2.getRotationMatrix2D((width/2,height/2),-(90+angle),1)
-    dst = cv2.warpAffine(img,M,(width,height))
+    dst = cv2.warpAffine(img,M,(width_orig,height_orig))
 
     dst = binary_img(dst)
     
