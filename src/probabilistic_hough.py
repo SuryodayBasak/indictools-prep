@@ -10,7 +10,7 @@ import prep2
 import numpy as np
 from scipy.stats import mode
 
-img1 = cv2.imread('/home/suryo/Image_Processing_Exercises/IISC/resources/1.jpg',0)
+img1 = cv2.imread('/home/suryo/Image_Processing_Exercises/IISC/resources/Kandanu10.jpg',0)
 words = np.zeros(img1.shape[:2],np.uint8)
 
 cv2.imshow('Output0',img1)
