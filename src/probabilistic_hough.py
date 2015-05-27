@@ -140,6 +140,7 @@ M = cv2.getRotationMatrix2D((width/2,height/2),-(90+angle),1)
 dst = cv2.warpAffine(img1,M,(width_orig,height_orig))
     
 cv2.imshow('final',dst)
+cv2.imwrite('skewcorrected.jpg',dst)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()

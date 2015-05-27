@@ -38,10 +38,10 @@ value of (255,255,255), and the background has a value of (0,0,0).
 """
 def binary_img(img):
 
-    img_erode = cv2.dilate(img,kernel,iterations = 2)
+    #img_erode = cv2.dilate(img,kernel,iterations = 2)
     blur=cv2.medianBlur(img,5)
 
-    mask1 = np.ones(img.shape[:2],np.uint8)
+    #mask1 = np.ones(img.shape[:2],np.uint8)
     """Applying histogram equalization"""
     cl1 = clahe.apply(blur)
 
@@ -68,7 +68,7 @@ def binary_img(img):
     thg = cv2.adaptiveThreshold(display,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
             cv2.THRESH_BINARY,11,2)
 
-    final = cv2.bitwise_and(dilation,dilation,mask=th) 
+    #final = cv2.bitwise_and(dilation,dilation,mask=th) 
 
     finalg = cv2.bitwise_and(dilation,dilation,mask=thg) 
 
@@ -115,10 +115,10 @@ def skew_correction(img):
     binary = binary_img(img)
     #binary = resize(binary)
     contours, hierarchy = cv2.findContours(binary,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-    cnt = contours[0]
-    upper_bound=len(contours)
+    #cnt = contours[0]
+    #upper_bound=len(contours)
     height_orig, width_orig = img.shape[:2]
-
+    words = np.zeros(img.shape[:2],np.uint8)
     
     for c in contours:
         areas.append(cv2.contourArea(c))
@@ -138,29 +138,54 @@ def skew_correction(img):
     abs_sobel64f = np.absolute(sobely)
     sobel_8u = np.uint8(abs_sobel64f)
     
-    sobel_resize = resize(sobel_8u)
-    #largest_contour = np.zeros(img.shape[:2],np.uint8)
-    largest_contour = np.zeros(sobel_resize.shape[:2],np.uint8)
-    
-    """After the next step, we'll have the largest word in the image.
-    Since all the words in different lines have to be parallel to each other,
-    we'll take the largest word as the reference and find out it's alighment.
-    We'll rotate the entire image accordingly"""
-    
-    #contours, hierarchy = cv2.findContours(sobel_8u,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-    contours, hierarchy = cv2.findContours(sobel_resize,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
    
+   
+   
+   
+   
+    cv2.imshow('Output2',sobel_8u)
+
+    minLineLength = 100
+    maxLineGap = 10
+    lines = cv2.HoughLinesP(sobel_8u,1,np.pi/180,100,minLineLength,maxLineGap)
+
+    for x1,y1,x2,y2 in lines[0]:
+        cv2.line(words,(x1,y1),(x2,y2),(255,255,255),2)
+    cv2.imshow('hough',words)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    height_orig, width_orig = img.shape[:2]
+    all_angles = []
+
+
+
+    contours, hierarchy = cv2.findContours(words,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     print len(contours)
     contour_count=0;   
     for c in contours:
         #max_index = np.argmax(areas)
         #current_contour = np.zeros(img.shape[:2],np.uint8)
-        current_contour = np.zeros(sobel_resize.shape[:2],np.uint8)
+        current_contour = np.zeros(img.shape[:2],np.uint8)
         cv2.drawContours(current_contour, contours, contour_count, (255,255,255), -1)
 
-        height, width = largest_contour.shape[:2]
+        height, width = current_contour.shape[:2]
 
-        all_white_pixels = []
+        #all_white_pixels = []
         current_white_pixels = [] 
 
         for i in range(0,height):
@@ -177,7 +202,7 @@ def skew_correction(img):
         eigenvalues, eigenvectors = np.linalg.eig(C)
 
         """Finding max eigenvalue"""
-        max_ev = max(eigenvalues)
+        #max_ev = max(eigenvalues)
         """Finding index of max eigenvalue"""
         max_index =  eigenvalues.argmax(axis=0)
 
@@ -193,9 +218,9 @@ def skew_correction(img):
         contour_count+=1
         print contour_count
     
-    print all_angles
-    angle = np.mean(all_angles)
-    print angle
+        print all_angles
+        angle = np.mean(all_angles)
+        print angle
     
     k = 0;
     non_zero_angles = []
@@ -230,12 +255,14 @@ def skew_correction(img):
     angle = np.mean(precision_angles)
     print 'Finally, the required angle is:'
     print angle
-        
+    
     #M = cv2.getRotationMatrix2D((width/2,height/2),-(90+angle),1)
     M = cv2.getRotationMatrix2D((width/2,height/2),-(90+angle),1)
     dst = cv2.warpAffine(img,M,(width_orig,height_orig))
+    
+    cv2.imshow('final',dst)
+    cv2.imwrite('skewcorrected2.jpg',dst)
 
-    dst = binary_img(dst)
     
     return dst
 
