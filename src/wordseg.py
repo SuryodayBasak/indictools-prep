@@ -50,12 +50,15 @@ for c in contours:
         cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,0),2)
         cv2.rectangle(words_temp,(x,y),(x+w,y+h),(0,0,0),-1)
 
-
 cv2.imshow('Outputimg',img)
 cv2.imshow('Outputtemp',words_temp)
 #cv2.imwrite('wordseg3.jpg',img)
 
-            
+contours, hierarchy = cv2.findContours(words_temp,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+
+for xx in contours:
+    cv2.drawContours(words_temp,[xx],-1,(255,255,255),-1)
+cv2.imshow('Outputtempk',words_temp)            
             
 cv2.waitKey(0)
 cv2.destroyAllWindows()
