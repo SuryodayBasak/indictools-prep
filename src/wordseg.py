@@ -30,7 +30,15 @@ for xx in contours:
     cv2.drawContours(words_temp,[xx],-1,(255,255,255),-1)
 cv2.imshow('Outputtemp0',words_temp)
     
-
+contours, hierarchy = cv2.findContours(words_temp,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+for c in contours:
+    x,y,w,h = cv2.boundingRect(c)
+    #img = 
+    cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,0),2)
+    cv2.imshow('Outputimg2',img)
+    #all_heights.append(h)
+    
+"""
 contours, hierarchy = cv2.findContours(words_temp,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 for c in contours:
     x,y,w,h = cv2.boundingRect(c)
@@ -58,7 +66,32 @@ contours, hierarchy = cv2.findContours(words_temp,cv2.RETR_TREE,cv2.CHAIN_APPROX
 
 for xx in contours:
     cv2.drawContours(words_temp,[xx],-1,(255,255,255),-1)
-cv2.imshow('Outputtempk',words_temp)            
+cv2.imshow('Outputtempk',words_temp)
+words_temp2=words_temp
+
+all_heights2 = []
+contours, hierarchy = cv2.findContours(words_temp2,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+for c in contours:
+    x,y,w,h = cv2.boundingRect(c)
+    #img = 
+    #cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,0),2)
+    all_heights2.append(h)
+
+print all_heights
+mean_height = np.mean(all_heights2)
+print mean_height
+std_dev = np.std(all_heights2)
+print std_dev
+
+for c in contours:
+    x,y,w,h = cv2.boundingRect(c)
+    if(math.fabs(h-mean_height)<=(std_dev)):
+        cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,0),2)
+        cv2.rectangle(words_temp,(x,y),(x+w,y+h),(0,0,0),-1)
+
+cv2.imshow('Outputimg2',img)
+cv2.imshow('Outputtemp2',words_temp)
+"""        
             
 cv2.waitKey(0)
 cv2.destroyAllWindows()
