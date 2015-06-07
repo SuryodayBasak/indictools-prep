@@ -48,9 +48,11 @@ for c in contours:
     x,y,w,h = cv2.boundingRect(c)
     if(math.fabs(h-mean_height)<=(std_dev)):
         cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,0),2)
+        cv2.rectangle(words_temp,(x,y),(x+w,y+h),(0,0,0),-1)
 
 
-cv2.imshow('Outputtemp',img)
+cv2.imshow('Outputimg',img)
+cv2.imshow('Outputtemp',words_temp)
 #cv2.imwrite('wordseg3.jpg',img)
 
             
