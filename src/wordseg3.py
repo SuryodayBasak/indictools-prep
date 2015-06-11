@@ -9,11 +9,11 @@ Created on Sun Jun  7 16:53:42 2015
 import cv2
 import prep2
 import numpy as np
-kernel1 = np.ones((2,3),np.uint8)
+kernel1 = np.ones((1,1),np.uint8)
 kernel2 = np.ones((1,1),np.uint8)
 
 all_heights = [] 
-img = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/2.jpg',0)
+img = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/durga.jpg',0)
 cv2.imshow('Output0',img)
 words_temp = np.zeros(img.shape[:2],np.uint8)
 
@@ -21,8 +21,15 @@ binary = prep2.binary_img(img)
 
 sobelx = cv2.Sobel(binary,cv2.CV_64F,1,0,ksize=5)
 cv2.imshow('sobel',sobelx)
-dilate_sobel = cv2.dilate(binary,kernel1,iterations = 1)
+
+abs_sobel64f = np.absolute(sobelx)
+sobel_8u = np.uint8(abs_sobel64f)
+    
+dilate_sobel = cv2.dilate(sobel_8u,kernel1,iterations = 1)
 cv2.imshow('dilate sobel',dilate_sobel)
+
+opening = cv2.morphologyEx(dilate_sobel, cv2.MORPH_OPEN, kernel1)
+cv2.imshow('open sobel',opening)
 
 dilation = cv2.dilate(binary,kernel1,iterations = 1)
 erosion = cv2.dilate(dilation,kernel1,iterations = 1)
