@@ -36,7 +36,24 @@ print x,y,w,h
 
 for i in range(x,x+w):
     for j in range(y,y+w):
-        print "yolo"
+        try:
+            if prep_img1[i,j] == 255:
+                print (i,j)
+                break
+        except:
+            pass
+        
+    for j in range(y+w,y,-1):
+        try:
+             if prep_img1[i,j] == 255:
+                 print (i,j)
+                 break
+        except:
+            pass
+            
+    print ""
+    print ""
+    print ""
 
 cv2.imshow('Bounding Box',prep_img1)
 cv2.waitKey(0)
