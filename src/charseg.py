@@ -37,19 +37,23 @@ print x,y,w,h
 for i in range(x,x+w):
     for j in range(y,y+w):
         try:
-            if prep_img1[i,j] == 255:
-                print (i,j)
+            #if prep_img1[i,j] == 255:
+            if words_temp[i,j] == 255:
+                upper = j
                 break
         except:
             pass
         
     for j in range(y+w,y,-1):
         try:
-             if prep_img1[i,j] == 255:
-                 print (i,j)
+             #if prep_img1[i,j] == 255:
+            if words_temp[i,j] == 255:
+                 lower = j
                  break
         except:
             pass
+        
+    print(i,upper-lower)
             
     print ""
     print ""
