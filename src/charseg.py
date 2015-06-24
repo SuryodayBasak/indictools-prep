@@ -36,28 +36,20 @@ print x,y,w,h
 
 for i in range(x,x+w):
     for j in range(y,y+w):
-        try:
-            #if prep_img1[i,j] == 255:
-            if words_temp[i,j] == 255:
-                upper = j
-                break
-        except:
-            pass
+        #if prep_img1[i,j] == 255:
+        if (words_temp[i,j] == 255):
+            upper = j
+            print "Upper",upper
+            break
         
     for j in range(y+w,y,-1):
-        try:
-             #if prep_img1[i,j] == 255:
-            if words_temp[i,j] == 255:
-                 lower = j
-                 break
-        except:
-            pass
+        #if prep_img1[i,j] == 255:
+        if (words_temp[i,j] == 255):
+            lower = j
+            print "Lower",lower
+            break
         
-    print(i,upper-lower)
-            
-    print ""
-    print ""
-    print ""
+    #print(i,upper-lower)
 
 cv2.imshow('Bounding Box',prep_img1)
 cv2.waitKey(0)
