@@ -66,7 +66,7 @@ for i in range(x,x+w):
         #print(i,lower-upper)
         values.append((i,lower-upper))
     except:
-        pass
+        values.append((i,0))
 
 print values
 plt.plot(*zip(*values))
