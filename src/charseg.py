@@ -13,6 +13,7 @@ kernel1 = np.ones((3,3),np.uint8)
 
 img1 = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/Kandanuword.jpg',0)
 words_temp = np.zeros(img1.shape[:2],np.uint8)
+print img1.shape[:2]
 
 cv2.imshow('Original Image',img1)
 
@@ -33,16 +34,21 @@ for c in contours:
     #cv2.rectangle(prep_img1,(x,y),(x+w,y+h),(255,0,0),1)
     
 print x,y,w,h
+print words_temp
+print type(words_temp)
+print words_temp[25,30]
 
 for i in range(x,x+w):
-    for j in range(y,y+w):
+    print "Entered loop1"
+    for j in range(y,y+h):
+        print "Entered loop2"
         #if prep_img1[i,j] == 255:
         if (words_temp[i,j] == 255):
             upper = j
             print "Upper",upper
             break
         
-    for j in range(y+w,y,-1):
+    for j in range(y+h,y,-1):
         #if prep_img1[i,j] == 255:
         if (words_temp[i,j] == 255):
             lower = j
