@@ -8,12 +8,14 @@ Created on Tue Jun 23 17:10:45 2015
 import cv2
 import prep2
 import numpy as np
+import matplotlib.pyplot as plt
 kernel1 = np.ones((3,3),np.uint8)
 
 
 img1 = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/Kandanuword.jpg',0)
 words_temp = np.zeros(img1.shape[:2],np.uint8)
 print img1.shape[:2]
+values =[]
 
 cv2.imshow('Original Image',img1)
 
@@ -61,10 +63,14 @@ for i in range(x,x+w):
             #print "Lower",lower
             break
     try:    
-        print(i,lower-upper)
+        #print(i,lower-upper)
+        values.append((i,lower-upper))
     except:
         pass
 
+print values
+plt.plot(*zip(*values))
+plt.show()
 cv2.imshow('Bounding Box',prep_img1)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
