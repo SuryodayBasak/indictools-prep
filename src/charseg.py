@@ -34,28 +34,36 @@ for c in contours:
     #cv2.rectangle(prep_img1,(x,y),(x+w,y+h),(255,0,0),1)
     
 print x,y,w,h
+"""
+cv2.circle(prep_img1,(x,y), 5, (255,255,255), -1)
+cv2.circle(prep_img1,(x+w,y+h), 5, (255,255,255), -1)
+"""
 print words_temp
 print type(words_temp)
 print words_temp[25,30]
 
+cv2.imshow('Bounding Box0',words_temp)
 for i in range(x,x+w):
-    print "Entered loop1"
+    #print "Entered loop1"
     for j in range(y,y+h):
-        print "Entered loop2"
-        #if prep_img1[i,j] == 255:
-        if (words_temp[i,j] == 255):
+        #print "Entered loop2.1"
+        if prep_img1[j,i] == 255:
+            #if (words_temp[j,i] == 255):
             upper = j
-            print "Upper",upper
+            #print "Upper",upper
             break
         
     for j in range(y+h,y,-1):
-        #if prep_img1[i,j] == 255:
-        if (words_temp[i,j] == 255):
+        #print "Entered loop2.2"
+        if prep_img1[j,i] == 255:
+            #if (words_temp[j,i] == 255):
             lower = j
-            print "Lower",lower
+            #print "Lower",lower
             break
-        
-    #print(i,upper-lower)
+    try:    
+        print(i,lower-upper)
+    except:
+        pass
 
 cv2.imshow('Bounding Box',prep_img1)
 cv2.waitKey(0)
