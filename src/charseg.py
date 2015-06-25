@@ -67,10 +67,14 @@ for i in range(x,x+w):
         values.append((i,lower-upper))
     except:
         values.append((i,0))
-
+ 
+for (i,j) in values:
+    if j == 0:
+        cv2.line(img1,(i,j+y),(i,j+y+h),(0,255,0),2)
 print values
 plt.plot(*zip(*values))
 plt.show()
-cv2.imshow('Bounding Box',prep_img1)
+cv2.imshow('Bounding Box',img1)
+cv2.imwrite('charsegmentation1.jpg',img1)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
