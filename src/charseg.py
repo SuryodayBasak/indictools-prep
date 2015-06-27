@@ -85,11 +85,36 @@ for (i,j) in difference_values:
 print avg1 
 avg1/=count
 
+clipped_values_x = []
+clipped_values_y = []
 for (i,j) in difference_values:
     if j < avg1:
         clipped_values.append((i,j))
+        clipped_values_x.append(i)
+        clipped_values_y.append(j)
         
 print clipped_values
+print clipped_values_x
+print clipped_values_y
+
+count = 0
+
+for idx, val in enumerate(clipped_values_y):
+    #print idx, val
+    try:
+        if (clipped_values_y[idx]<clipped_values_y[idx-1]) and (clipped_values_y[idx]<clipped_values_y[idx+1]):
+            clipped_local_minima.append((clipped_values_x[idx],clipped_values_y[idx]))
+    except:
+        pass
+
+print ''
+print ''
+print clipped_local_minima
+
+
+for (i,j) in clipped_local_minima:
+    cv2.line(img1,(i,j+y),(i,j+y+h),(0,255,0),2)
+   
 plt.plot(*zip(*clipped_values))
 plt.show()
 cv2.imshow('Bounding Box',img1)
