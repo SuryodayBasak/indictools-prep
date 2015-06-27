@@ -15,7 +15,9 @@ kernel1 = np.ones((3,3),np.uint8)
 img1 = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/Kandanuword.jpg',0)
 words_temp = np.zeros(img1.shape[:2],np.uint8)
 print img1.shape[:2]
-values =[]
+difference_values =[]
+clipped_values= []
+clipped_local_minima = []
 
 cv2.imshow('Original Image',img1)
 
@@ -64,15 +66,31 @@ for i in range(x,x+w):
             break
     try:    
         #print(i,lower-upper)
-        values.append((i,lower-upper))
+        difference_values.append((i,lower-upper))
     except:
-        values.append((i,0))
- 
-for (i,j) in values:
+        difference_values.append((i,0))
+""" 
+for (i,j) in difference_values:
     if j == 0:
         cv2.line(img1,(i,j+y),(i,j+y+h),(0,255,0),2)
-print values
-plt.plot(*zip(*values))
+"""     
+print difference_values
+
+avg1 = 0
+count = 0
+for (i,j) in difference_values:
+    avg1+=j
+    count+=1
+
+print avg1 
+avg1/=count
+
+for (i,j) in difference_values:
+    if j < avg1:
+        clipped_values.append((i,j))
+        
+print clipped_values
+plt.plot(*zip(*clipped_values))
 plt.show()
 cv2.imshow('Bounding Box',img1)
 cv2.imwrite('charsegmentation1.jpg',img1)
