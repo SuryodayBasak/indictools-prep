@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 kernel1 = np.ones((3,3),np.uint8)
 
 
-img1 = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/Kandanuword.jpg',0)
+img1 = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/2_word.jpg',0)
 words_temp = np.zeros(img1.shape[:2],np.uint8)
 print img1.shape[:2]
 difference_values =[]
@@ -118,6 +118,6 @@ for (i,j) in clipped_local_minima:
 plt.plot(*zip(*clipped_values))
 plt.show()
 cv2.imshow('Bounding Box',img1)
-cv2.imwrite('charsegmentation1.jpg',img1)
+cv2.imwrite('charsegmentation2.jpg',img1)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
