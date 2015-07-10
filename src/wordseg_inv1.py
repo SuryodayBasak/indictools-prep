@@ -12,7 +12,7 @@ kernel1 = np.ones((2,2),np.uint8)
 kernel2 = np.ones((1,1),np.uint8)
 
 all_heights = [] 
-img = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/2.jpg',0)
+img = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/pl8.jpg',0)
 cv2.imshow('Output0',img)
 words_temp = np.zeros(img.shape[:2],np.uint8)
 
