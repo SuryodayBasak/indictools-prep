@@ -28,6 +28,9 @@ cv2.imshow('Outputimg3',erosion)
 edges = cv2.Canny(dilation,50,100)
 cv2.imshow('edges',edges)          
 
+dilation2 = cv2.dilate(edges,kernel1,iterations = 1)
+cv2.imshow('Outputimg9999',dilation2)
+
 edges = cv2.dilate(edges,kernel1,iterations = 1)
 ret,thresh = cv2.threshold(edges,127,255,0)
 contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
@@ -36,7 +39,6 @@ for xx in contours:
     cv2.drawContours(edges,[xx],-1,(255,255,255),-1)
     
 cv2.imshow('edges2',edges)
-
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
