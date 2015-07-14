@@ -12,7 +12,7 @@ kernel1 = np.ones((2,2),np.uint8)
 kernel2 = np.ones((1,1),np.uint8)
 
 all_heights = [] 
-img = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/pl8.jpg',0)
+img = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/hi.png',0)
 cv2.imshow('Output0',img)
 words_temp = np.zeros(img.shape[:2],np.uint8)
 
@@ -30,6 +30,9 @@ cv2.imshow('edges',edges)
 
 dilation2 = cv2.dilate(edges,kernel1,iterations = 1)
 cv2.imshow('Outputimg9999',dilation2)
+
+inv9999 = 255-dilation2
+cv2.imshow('inv9999',inv9999)
 
 edges = cv2.dilate(edges,kernel1,iterations = 1)
 ret,thresh = cv2.threshold(edges,127,255,0)
