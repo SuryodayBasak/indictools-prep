@@ -45,6 +45,9 @@ for c in contours:
     all_heights.append(h)
 
 print all_heights
+std_dev = np.std(all_heights)
+mn = np.mean(all_heights)
+print std_dev,mn
 
 for xx in contours:
     cv2.drawContours(edges,[xx],-1,(255,255,255),-1)
