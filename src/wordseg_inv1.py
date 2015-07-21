@@ -42,6 +42,9 @@ contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIM
 for c in contours:
     x,y,w,h = cv2.boundingRect(c)
     cv2.rectangle(boxes_temp,(x,y),(x+w,y+h),(255,255,255),-1)
+    all_heights.append(h)
+
+print all_heights
 
 for xx in contours:
     cv2.drawContours(edges,[xx],-1,(255,255,255),-1)
