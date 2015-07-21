@@ -12,7 +12,7 @@ kernel1 = np.ones((2,2),np.uint8)
 kernel2 = np.ones((1,1),np.uint8)
 
 all_heights = [] 
-img = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/2.jpg',0)
+img = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/hi.png',0)
 cv2.imshow('Output0',img)
 words_temp = np.zeros(img.shape[:2],np.uint8)
 boxes_temp = np.zeros(img.shape[:2],np.uint8)
@@ -36,18 +36,20 @@ inv9999 = 255-dilation2
 cv2.imshow('inv9999',inv9999)
 
 edges = cv2.dilate(edges,kernel1,iterations = 1)
-ret,thresh = cv2.threshold(edges,127,255,0)
+ret,thresh = cv2.threshold(dilation2,127,255,0)
 contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 
 for c in contours:
     x,y,w,h = cv2.boundingRect(c)
     cv2.rectangle(boxes_temp,(x,y),(x+w,y+h),(255,255,255),-1)
-    all_heights.append(h)
+    if h> 10:
+        all_heights.append(h)
 
 print all_heights
 std_dev = np.std(all_heights)
 mn = np.mean(all_heights)
-print std_dev,mn
+md = np.median(all_heights)
+print std_dev,mn, md
 
 for xx in contours:
     cv2.drawContours(edges,[xx],-1,(255,255,255),-1)
