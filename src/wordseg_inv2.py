@@ -63,17 +63,25 @@ cv2.imshow('edges2',edges)
 
 
 
-
+ret,thresh = cv2.threshold(erosion,127,255,0)
 contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
 
 for c in contours:
     x,y,w,h = cv2.boundingRect(c)
-    if (mn-(std_dev/2)<h) or (mn-(std_dev/2)>h):
-        cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+    #if (mn+(std_dev/2)<h):
+    cv2.rectangle(boxes_temp,(x,y),(x+w,y+h),(255,0,0),-1)
+    #cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
+    
+cv2.imshow('boxes_temp',boxes_temp)
 
+
+ret,thresh = cv2.threshold(boxes_temp,127,255,0)
+contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+
+for c in contours:
+    x,y,w,h = cv2.boundingRect(c)
+    cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2)
 
 cv2.imshow('img',img)
-
-
 cv2.waitKey(0)
 cv2.destroyAllWindows()
