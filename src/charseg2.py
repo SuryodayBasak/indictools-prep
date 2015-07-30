@@ -46,7 +46,14 @@ print words_temp
 print type(words_temp)
 print words_temp[25,30]
 
+
+
+"""
+This is where I should improve the algorithm.
+"""
 cv2.imshow('Bounding Box0',words_temp)
+
+bounds_temp = np.zeros(img1.shape[:2],np.uint8)
 for i in range(x,x+w):
     #print "Entered loop1"
     for j in range(y,y+h):
@@ -55,6 +62,7 @@ for i in range(x,x+w):
             #if (words_temp[j,i] == 255):
             upper = j
             #print "Upper",upper
+            bounds_temp[j,i] = 255
             break
         
     for j in range(y+h,y,-1):
@@ -63,12 +71,15 @@ for i in range(x,x+w):
             #if (words_temp[j,i] == 255):
             lower = j
             #print "Lower",lower
+            bounds_temp[j,i] = 255
             break
     try:    
         #print(i,lower-upper)
         difference_values.append((i,lower-upper))
     except:
         difference_values.append((i,0))
+        
+cv2.imshow('Bounds',bounds_temp)
 """ 
 for (i,j) in difference_values:
     if j == 0:
