@@ -36,8 +36,9 @@ for i in range(0,height-h,h):
     for j in range(0,width-w,w):
         print (j,i)
         cv2.rectangle(img,(j,i),(j+w,i+h),(0,0,255),2)
-        image = img[j:j + h, i:i + w]
-#cv2.imshow('img1',image)
+        image = img[i:i+w,j:j+h]
+        #print img
+cv2.imshow('img1',image)
 cv2.imshow('img',img)
 
 cv2.waitKey(0)
