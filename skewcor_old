@@ -1,0 +1,98 @@
+ sobel_resize = resize(sobel_8u)
+    #largest_contour = np.zeros(img.shape[:2],np.uint8)
+    largest_contour = np.zeros(sobel_resize.shape[:2],np.uint8)
+    
+    """After the next step, we'll have the largest word in the image.
+    Since all the words in different lines have to be parallel to each other,
+    we'll take the largest word as the reference and find out it's alighment.
+    We'll rotate the entire image accordingly"""
+    
+    #contours, hierarchy = cv2.findContours(sobel_8u,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv2.findContours(sobel_resize,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+   
+    print len(contours)
+    contour_count=0;   
+    for c in contours:
+        #max_index = np.argmax(areas)
+        #current_contour = np.zeros(img.shape[:2],np.uint8)
+        current_contour = np.zeros(sobel_resize.shape[:2],np.uint8)
+        cv2.drawContours(current_contour, contours, contour_count, (255,255,255), -1)
+
+        height, width = largest_contour.shape[:2]
+
+        all_white_pixels = []
+        current_white_pixels = [] 
+
+        for i in range(0,height):
+            for j in range(0,width):
+                if(current_contour.item(i,j)==255):
+                    current_white_pixels.append([i,j])
+            
+
+        matrix = np.array(current_white_pixels)
+    
+        """Finding covariance matrix"""
+        C = np.cov(matrix.T)
+
+        eigenvalues, eigenvectors = np.linalg.eig(C)
+
+        """Finding max eigenvalue"""
+        max_ev = max(eigenvalues)
+        """Finding index of max eigenvalue"""
+        max_index =  eigenvalues.argmax(axis=0)
+
+        """The largest eigen value gives the approximate length of the bounding
+        ellipse around the largest word. If we follow the index of the largest 
+        eigen value and find the eigen vectors in the column of that index,
+        we'll get the x and y coordinates of it's centre."""
+        y = eigenvectors[1,max_index]
+        x = eigenvectors[0,max_index]
+
+        angle = (np.arctan2(y,x))*(180/np.pi)
+        all_angles.append(angle)
+        contour_count+=1
+        print contour_count
+    
+    print all_angles
+    angle = np.mean(all_angles)
+    print angle
+    
+    k = 0;
+    non_zero_angles = []
+    
+    for i in all_angles:
+        if ((i != 0) and (i!=90.0)):
+            non_zero_angles.append(i)
+            
+    print non_zero_angles
+    
+    rounded_angles = []
+    for i in non_zero_angles:
+        rounded_angles.append(np.round(i,0))
+    
+    print rounded_angles
+    print "mode is"
+    #print np.mode(rounded_angles)
+    #angle = np.mean(non_zero_angles)
+    #angle = np.mode(rounded_angles)
+    
+    mode_angle = mode(rounded_angles)[0][0]
+    print mode_angle
+    
+    precision_angles = []
+    for i in non_zero_angles:
+        if (np.round(i,0) == mode_angle):
+            precision_angles.append(i)
+            
+    print 'precision angles:'
+    print precision_angles
+    
+    angle = np.mean(precision_angles)
+    print 'Finally, the required angle is:'
+    print angle
+        
+    #M = cv2.getRotationMatrix2D((width/2,height/2),-(90+angle),1)
+    M = cv2.getRotationMatrix2D((width/2,height/2),-(90+angle),1)
+    dst = cv2.warpAffine(img,M,(width_orig,height_orig))
+
+    dst = binary_img(dst)
