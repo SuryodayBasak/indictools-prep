@@ -26,14 +26,18 @@ cv2.imshow('bina',th3)
 
 x= 10
 y = 22
-w = 40
-h = 40
+w = 20
+h = 20
 image = img[y:y + h, x:x + w]
 cv2.imshow('img',image)
 
-for i in range(0,height,h):
-    for j in range(0,width,w):
-        cv2.rectangle(img,(i,j),(i+w,j+h),(255,255,255),2)
+
+for i in range(0,height-h,h):
+    for j in range(0,width-w,w):
+        print (j,i)
+        cv2.rectangle(img,(j,i),(j+w,i+h),(0,0,255),2)
+        image = img[j:j + h, i:i + w]
+#cv2.imshow('img1',image)
 cv2.imshow('img',img)
 
 cv2.waitKey(0)
