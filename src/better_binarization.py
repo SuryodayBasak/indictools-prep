@@ -10,7 +10,11 @@ import numpy as np
 import prep3
 clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8,8))
 
-img = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/clips/1.jpg',0)
+img = cv2.imread('/home/suryo/Image_Processing_Exercises/indictools-prep/resources/clips/1.jpg')
+dst = cv2.fastNlMeansDenoisingColored(img,None,10,10,7,21)
+
+cv2.imshow('dst',dst)
+img = cv2.cvtColor(dst, cv2.COLOR_BGR2GRAY)
 height, width = img.shape
 base = np.ones(img.shape[:2],np.uint8)
 print height,width
@@ -46,6 +50,8 @@ for i in range(0,height,h):
         #print img
 #cv2.imshow('img1',th)        
 cv2.imshow('img',img)
+
+#base = cv2.GaussianBlur(base,(3,3),0)
 cv2.imshow('base',base)
 
 cv2.waitKey(0)
